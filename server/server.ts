@@ -24,14 +24,14 @@ const app = express();
 
 const mongoURI : any = process.env.MONGO_URI;
 
-mongoose.connect(mongoURI);
+// mongoose.connect(mongoURI);
 
-// mongoose.connect(mongoURI, {
-//   // sets the name of the DB that our collections are part of
-//   dbName: 'starwars'
-// })
-//   .then(() => console.log('Connected to Mongo DB.'))
-//   .catch(err => console.log(err));
+mongoose.connect(mongoURI, {
+  // sets the name of the DB that our collections are part of
+  dbName: 'animeUsers'
+})
+  .then(() => console.log('Connected to Mongo DB.'))
+  .catch(err => console.log(err));
 
 
 
