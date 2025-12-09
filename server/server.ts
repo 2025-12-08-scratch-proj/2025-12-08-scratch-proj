@@ -20,7 +20,7 @@ const clientPath = path.resolve(import.meta.dirname, "../client");
 // serving REACT frontend files (HTML, CSS, JS, also images)
 app.use("/", express.static(clientPath));
 
-// need to set up routes
+// set up routes, from most specific to least specific
 // app.use("/api/characters", charRouter);
 
 //  Use api router for routes starting with /api
