@@ -1,0 +1,91 @@
+{
+   "data": [
+       {
+           "__v": 1,
+           "alternativeTitles": [
+               "Frieren: Beyond Journey's End",
+               "葬送のフリーレン"
+           ],
+           "genres": [
+               "Adventure",
+               "Drama",
+               "Fantasy"
+           ],
+           "hasRanking": true,
+           "image": "https://cdn.myanimelist.net/images/anime/1015/138006.jpg",
+           "link": "https://myanimelist.net/anime/52991/Sousou_no_Frieren",
+           "ranking": 1,
+           "thumb": "https://cdn.myanimelist.net/r/50x70/images/anime/1015/138006.jpg?s=09c2f2dec5891d8e8fbb9fa3b23c75b4",
+           "title": "Sousou no Frieren",
+           "episodes": null,
+           "hasEpisode": false,
+           "status": "Not yet aired",
+           "synopsis": "The demon king has been defeated, and the victorious hero party returns home before disbanding. The four—mage Frieren, hero Himmel, priest Heiter, and warrior Eisen—reminisce about their decade-long journey as the moment to bid each other farewell arrives. But the passing of time is different for elves, thus Frieren witnesses her companions slowly pass away one by one.\n\nBefore his death, Heiter manages to foist a young human apprentice called Fern onto Frieren. Driven by the elf's passion for collecting a myriad of magic spells, the pair embarks on a seemingly aimless journey, revisiting the places that the heroes of yore had visited. Along their travels, Frieren slowly confronts her regrets of missed opportunities to form deeper bonds with her now-deceased comrades.\n\n[Written by MAL Rewrite]",
+           "type": "TV",
+           "updatedAt": "2025-08-07T01:00:33.810000Z",
+           "workerId": "qk0af",
+           "id": "52991",
+           "_id": "52991"
+       },
+       {
+           "hasRanking": true,
+           "image": "https://cdn.myanimelist.net/images/anime/1763/150638.jpg",
+           "link": "https://myanimelist.net/anime/57555/Chainsaw_Man_Movie__Reze-hen",
+           "ranking": 2,
+           "thumb": "https://cdn.myanimelist.net/r/50x70/images/anime/1763/150638.jpg?s=cd96c9788488c258e7f749a9d208989e",
+           "title": "Chainsaw Man Movie: Reze-hen",
+           "updatedAt": "2025-08-07T01:10:49.362000Z",
+           "workerId": "qk0af",
+           "alternativeTitles": [
+               "Gekijouban Chainsaw Man: Reze-hen",
+               "劇場版 チェンソーマン レゼ篇",
+               "Chainsaw Man the Movie: Reze Arc"
+           ],
+           "episodes": 1,
+           "genres": [
+               "Action",
+               "Fantasy"
+           ],
+           "hasEpisode": true,
+           "status": "Not yet aired",
+           "synopsis": "Sequel to Chainsaw Man",
+           "type": "Movie",
+           "id": "57555",
+           "_id": "57555"
+       },
+       {
+           "__v": 1,
+           "alternativeTitles": [
+               "Hagane no Renkinjutsushi: Fullmetal Alchemist",
+               "Fullmetal Alchemist (2009)",
+               "FMA",
+               "FMAB",
+               "鋼の錬金術師 FULLMETAL ALCHEMIST",
+               "Fullmetal Alchemist: Brotherhood",
+               "Fullmetal Alchemist Brotherhood"
+           ],
+           "genres": [
+               "Action",
+               "Adventure",
+               "Drama",
+               "Fantasy"
+           ],
+           "hasRanking": true,
+           "image": "https://cdn.myanimelist.net/images/anime/1208/94745.jpg",
+           "link": "https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood",
+           "ranking": 3,
+           "thumb": "https://cdn.myanimelist.net/r/50x70/images/anime/1208/94745.jpg?s=7892d01b6c74f1bf945f7a3ff3bb1f6a",
+           "title": "Fullmetal Alchemist: Brotherhood",
+           "episodes": 64,
+           "hasEpisode": true,
+           "status": "Finished Airing",
+           "type": "TV",
+           "updatedAt": "2025-08-07T01:00:33.811000Z",
+           "workerId": "qk0af",
+           "synopsis": "After a horrific alchemy experiment goes wrong in the Elric household, brothers Edward and Alphonse are left in a catastrophic new reality. Ignoring the alchemical principle banning human transmutation, the boys attempted to bring their recently deceased mother back to life. Instead, they suffered brutal personal loss: Alphonse's body disintegrated while Edward lost a leg and then sacrificed an arm to keep Alphonse's soul in the physical realm by binding it to a hulking suit of armor.\n\nThe brothers are rescued by their neighbor Pinako Rockbell and her granddaughter Winry. Known as a bio-mechanical engineering prodigy, Winry creates prosthetic limbs for Edward by utilizing \"automail,\" a tough, versatile metal used in robots and combat armor. After years of training, the Elric brothers set off on a quest to restore their bodies by locating the Philosopher's Stone—a powerful gem that allows an alchemist to defy the traditional laws of Equivalent Exchange.\n\nAs Edward becomes an infamous alchemist and gains the nickname \"Fullmetal,\" the boys' journey embroils them in a growing conspiracy that threatens the fate of the world.\n\n[Written by MAL Rewrite]",
+           "id": "5114",
+           "_id": "5114"
+       },
+    ]
+}
+

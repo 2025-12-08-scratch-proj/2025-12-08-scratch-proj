@@ -2,9 +2,12 @@ import path from "path";
 // import { fileURLToPath } from 'url';
 import express, { Request, Response, NextFunction } from "express";
 
-// import apiRouter from "./routes/api";
+import apiRouter from "./routes/api";
 // import charRouter from "./routes/characters";
 // import favRouter from "./routes/favs";
+
+// fetch GET request from https://anime-db.p.rapidapi.com/anime 
+// universal API key to connect to rapidapi.com's databases of databases: 364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124
 
 const app = express();
 const PORT = 3000;
@@ -24,7 +27,7 @@ app.use("/", express.static(clientPath));
 // app.use("/api/characters", charRouter);
 
 //  Use api router for routes starting with /api
-// app.use("/api", apiRouter);
+app.use("/api", apiRouter);
 //http://localhost:3000/api
 // inside of api.ts file, "/" is same as "http://localhost:3000/api"
 
