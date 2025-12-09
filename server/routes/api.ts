@@ -25,7 +25,7 @@ apiRouter.get(
   "/genre",
   swapiController.getByGenre,
   (_, res) => {
-    return res.status(200).json({ getAnime: res.locals.getAnime });
+    return res.status(200).json({ animeGenre: res.locals.animeGenre });
   }
 );
 

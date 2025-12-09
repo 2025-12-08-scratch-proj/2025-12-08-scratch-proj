@@ -110,23 +110,53 @@ export default {
       }
 
       // Parse API resp (FROM JSON input -> convert to usable JavaScript)
-      const allAnime = await response.json();
+      const genreAnime = await response.json();
 
       // limit chars to manageable num
-      //   const limitAnime = allAnime.slice(0, 3);
+      //   const limitAnime = genreAnime.slice(0, 3);
 
       // Store char data in res.locals obj (res -> Express res to client)
       //   res.locals.getAnime = limitAnime;
 
-      res.locals.getAnime = allAnime;
+      res.locals.animeGenre = genreAnime;
 
       // Move to next middleware
       return next();
     } catch (err) {
       // Invoke global error handler
       return next({
-        log: `getAllAnime error: ${err}`,
-        message: { err: "getAllAnimeData error" },
+        log: `getByGenre error: ${err}`,
+        message: { err: "getByGenre error" },
+      });
+    }
+  },
+
+
+
+    // ADD MIDDLEWARE TO ADD CHARACTER PHOTOS HERE
+  populateAnimePhotos: (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (!res.locals.moreCharacters) {
+        throw new Error("invalid input data");
+      }
+      // OPTION 1: iterate over each char and add photo prop
+      // res.locals.moreCharacters = res.locals.moreCharacters.map((charObj) => {
+      //   return {
+      //     ...charObj, // spread existing props
+      //     photo: convertToPhotoUrl(charObj.name), // add photo prop
+      //   };
+      // });
+
+      // OPTION 2: using Object.assign(), iterate over each char and add photo prop
+      res.locals.moreCharacters = res.locals.moreCharacters.map( charObj => {
+        return Object.assign( {}, charObj, {photo: convertToPhotoUrl(charObj.name)  
+        });
+      });
+      return next();
+    } catch (err) {
+      return next({
+        log: `populateCharPhotos error: ${err}`,
+        message: { err: "incorrect input received" },
       });
     }
   },
