@@ -1,0 +1,23 @@
+{
+  "main": "server/server.ts",
+  "type": "module",
+  "scripts": {
+    "start": "npm run server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "tsx --watch server/server.ts",
+    "client": "vite"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.3",
+    "@vitejs/plugin-react-swc": "^3.10.2",
+    "express": "^5.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.0",
+    "tsx": "^4.20.3",
+    "vite": "^7.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
