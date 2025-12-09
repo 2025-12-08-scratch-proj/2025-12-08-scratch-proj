@@ -1,43 +1,89 @@
 import { Request, Response, NextFunction } from "express";
 // note: 2 DIFFERENT response objs here: 1 response from SWAPI to server, 1 res from server to client
 
-
-
+const API_KEY = "364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124";
+// make sure to add to fetch request -> { headers: { "X-RapidApi-Key": API_KEY }}
 
 export default {
- // ADD MIDDLEWARE TO GET MORE CHARACTERS HERE
-  getMoreChar: async (req: Request, res: Response, next: NextFunction) => {
+  // ADD MIDDLEWARE TO GET MORE CHARACTERS HERE
+
+
+  // this is actually getAllAnime by genre
+  getAllAnime: async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Use fetch to get all char data
-      // example: https://swapi.info/api/people/1 to get char data
-      //NOTE: response is from SWAPI to server (NOT same as res)
-      const response = await fetch(`https://swapi.info/api/people/`);
+      // example: https://anime-db.p.rapidapi.com/anime to get char data
+      //NOTE: response is from rapidAPI to server (NOT same as res)
 
-      // Check if API resp success
+        // const { genre, param4 } = req.body;
+
+      /* genre options are:
+    "Award Winning",
+    "Action",
+    "Suspense",
+    "Horror",
+    "Ecchi",
+    "Avant Garde",
+    "Sports",
+    "Supernatural",
+    "Fantasy",
+    "Gourmet",
+    "Boys Love",
+    "Drama",
+    "Comedy",
+    "Mystery",
+    "Girls Love",
+    "Slice of Life",
+    "Adventure",
+    "Romance",
+    "Sci-Fi",
+    */
+
+      // hard-coded queries
+      // will get 8 entries (size) from page 1
+      const page = 1;
+      const size = 8;
+      const genre = "Fantasy"; // user input ->
+      const sort = "asc"; // user input -> should be either 'asc' or 'desc'
+
+      const baseUrl = `https://anime-db.p.rapidapi.com/anime`;
+
+      // Construct the URL for fetch, including query parameters
+      const url = `${baseUrl}?page=${page}&size=${size}&genres=${genre}&sortBy=ranking&sortOrder=${sort}`;
+
+      //  https://anime-db.p.rapidapi.com/anime?page=2&size=25
+
+      const response = await fetch(
+        url,
+        { headers: { "X-RapidApi-Key": API_KEY } }
+        // Check if API resp success
+      );
       if (!response.ok) {
-        throw new Error(`SWAPI responded with status: ${response.status}`);
+        throw new Error(`RapidAPI responded with status: ${response.status}`);
       }
 
       // Parse API resp (FROM JSON input -> convert to usable JavaScript)
-      const allChars = await response.json();
+      const allAnime = await response.json();
 
       // limit chars to manageable num
-      const limitChars = allChars.slice(0, 15);
+      //   const limitAnime = allAnime.slice(0, 3);
 
       // Store char data in res.locals obj (res -> Express res to client)
-      res.locals.moreCharacters = limitChars;
+      //   res.locals.getAnime = limitAnime;
+
+      res.locals.getAnime = allAnime;
 
       // Move to next middleware
       return next();
     } catch (err) {
       // Invoke global error handler
       return next({
-        log: `getMoreChar error: ${err}`,
-        message: { err: "getMoreCharData error" },
+        log: `getAllAnime error: ${err}`,
+        message: { err: "getAllAnimeData error" },
       });
     }
   },
 
-// ADD MORE MIDDLEWARE HERE
 
+  // ADD MORE MIDDLEWARE HERE
 };

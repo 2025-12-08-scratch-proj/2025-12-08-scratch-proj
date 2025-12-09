@@ -24,7 +24,7 @@ const clientPath = path.resolve(import.meta.dirname, "../client");
 app.use("/", express.static(clientPath));
 
 // set up routes, from most specific to least specific
-// app.use("/api/characters", charRouter);
+// app.use("/api/getAnime", apiRouter);
 
 //  Use api router for routes starting with /api
 app.use("/api", apiRouter);
