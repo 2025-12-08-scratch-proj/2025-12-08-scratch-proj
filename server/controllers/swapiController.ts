@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 // note: 2 DIFFERENT response objs here: 1 response from SWAPI to server, 1 res from server to client
 
-const API_KEY = "364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124";
+// fetch GET request from https://anime-db.p.rapidapi.com/anime 
+// NOTE: rate limit -> 100 calls per day
+// universal API key to connect to rapidapi.com's databases of databases: 364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124
+
+const API_KEY = process.env.API_KEY
 // make sure to add to fetch request -> { headers: { "X-RapidApi-Key": API_KEY }}
 
 export default {

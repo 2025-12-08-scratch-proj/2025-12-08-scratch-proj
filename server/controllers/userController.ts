@@ -24,6 +24,9 @@ const userController: UserController = {
   createUser: async (req, res, next) => {
     const { username, password } = req.body;
 
+  // alternative method:
+  // User.create() -> Mongoose middleware under the hood will automatically run .pre method before saving even with .create()
+
     try {
       const newUser = new User({
         username: username,

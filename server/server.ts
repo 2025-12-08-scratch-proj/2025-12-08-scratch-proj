@@ -16,28 +16,31 @@ dotenv.config(); // process.env
 
 const PORT = 3000;
 
-// fetch GET request from https://anime-db.p.rapidapi.com/anime 
-// universal API key to connect to rapidapi.com's databases of databases: 364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124
 
+// make sure to initialize express
+// This calls the imported express() function, creating a new Express application object and storing it in the app variable. This app object is what you use to define routes, middleware, and start the server.
 const app = express();
 
-
+// create a .env file at root (top-level), not nested inside any folder
+// set up mongoDB under your organization, create a project, and under project,deploy a cluster (default name: Cluster 0)
+// add teammates as database admin under Database & Network Access (need to expand left-side menu)
+// give each teammate username and password URI
+// put MONGO_URI=<uri connection string> inside .env file
 const mongoURI : any = process.env.MONGO_URI;
 
 // mongoose.connect(mongoURI);
-
 mongoose.connect(mongoURI, {
   // sets the name of the DB that our collections are part of
   dbName: 'animeUsers'
 })
-  .then(() => console.log('Connected to Mongo DB.'))
+  .then(() => console.log('Connected to Mongo DB.')) // check to verify connected to DB in .then clause
   .catch(err => console.log(err));
 
 
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// add parsing middleware
+app.use(express.json()); // parsing json
+app.use(express.urlencoded({ extended: true })); // for parsing forms 
+app.use(cookieParser()); // parsing cookies for authentication
 
 
 // PATH VARIABLES (accessing React frontend)
