@@ -1,9 +1,9 @@
 import express from "express";
 import path from "path";
 
-import userController from '../controllers/userController.ts';
-import cookieController from '../controllers/cookieController.ts';
-import sessionController from '../controllers/sessionController.ts';
+import userController from "../controllers/userController.ts";
+import cookieController from "../controllers/cookieController.ts";
+import sessionController from "../controllers/sessionController.ts";
 
 const oauthRouter = express.Router();
 // PATH VARIABLES (accessing React frontend)
@@ -12,50 +12,58 @@ const clientPath = path.resolve(import.meta.dirname, "../../client/");
 
 // user signup without authentication
 // http://localhost:3000/oauth/signup
-oauthRouter.get('/signup', (_, res) => {
+oauthRouter.get("/signup", (_, res) => {
   return res.status(200).sendFile(path.join(clientPath, "signup.html"));
 });
 
-oauthRouter.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession,  (req, res) => {
-//   console.log(req.cookies);  
-  console.log('user on signup page')
-  return res.redirect('/secret'); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
-  // res.redirect('/'); // or if no time, just redirect to landing page
-});
+oauthRouter.post(
+  "/signup",
+  userController.createUser,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
+    console.log("user on signup page");
+    console.log("cookies, if exists: ", req.cookies); // // TEST ssid COOKIES HERE
+    return res.redirect("/secret"); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
+    // res.redirect('/'); // or if no time, just redirect to landing page
+  }
+);
 
 /**
-* login - do we need login.html? 
-* http://localhost:3000/oauth/login
-*/
-oauthRouter.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession,  (req, res) => {
-console.log('POST oauthRouter login req.cookies ', req.cookies);
-console.log('POST oauthRouter user on login page')
-  return res.redirect('/secret');
-});
-
+ * login - do we need login.html?
+ * http://localhost:3000/oauth/login
+ */
+oauthRouter.post(
+  "/login",
+  userController.verifyUser,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
+    // do NOT test for req.cookies here since will still have previous logged in user's cookies, NOT yet coookies for current user
+    console.log("POST oauthRouter user on login page");
+    return res.redirect("/secret");
+  }
+);
 
 // authorized routes (without authentication yet)
 // * http://localhost:3000/oauth/secret
-oauthRouter.get('/secret', sessionController.isLoggedIn,  (req, res) => {
-  console.log('GET secret page oauthRouter req.cookies ', req.cookies);
-    console.log('user logged in at at secret page');
+oauthRouter.get("/secret", sessionController.isLoggedIn, (req, res) => {
+  console.log("user logged in at at secret page");
+  console.log("GET secret page oauthRouter req.cookies ", req.cookies); // TEST ssid COOKIES HERE to make sure matches userId
   return res.status(200).sendFile(path.join(clientPath, "secret.html"));
 });
 
-
-
 export default oauthRouter;
 
-
 /**
-* signup
-*/
+ * signup
+ */
 // app.get('/signup', (_, res) => {
 //   return res.status(200).sendFile(path.join(clientPath, "signup.html"));
 // });
 
 // app.post('/signup', userController.createUser , cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-//   console.log(req.cookies);  
+//   console.log(req.cookies);
 //   res.redirect('/secret');
 // });
 
@@ -65,19 +73,18 @@ export default oauthRouter;
 // app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
 //   // what should happen here on successful log in?
 //   console.log('POST login req.cookies ', req.cookies);
-//  // return res.status(200).json(res.locals.verifyUser)  
+//  // return res.status(200).json(res.locals.verifyUser)
 //   res.redirect('/secret');
 // });
 
-
 /**
-* Authorized routes
-*/
+ * Authorized routes
+ */
 
 // Add this route to test cookies
 // app.get('/check-cookies', (req, res) => {
 //   console.log('Cookies received:', req.cookies);
-//   res.json({ 
+//   res.json({
 //     cookies: req.cookies,
 //     headers: req.headers.cookie
 //   });
@@ -91,10 +98,8 @@ export default oauthRouter;
 //   res.send( { users: res.locals.users });
 // })
 
-
 // // cookie for all requests here?
 // app.use('/', cookieController.setCookie, (req, res) => {
 //   console.log(req.cookies);  // should show cookie headers
 //   res.send('set a new cookie!');
 // })
-

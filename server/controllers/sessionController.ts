@@ -4,7 +4,7 @@ import Session from "../models/sessionModel"
 const sessionController: SessionController = {
     isLoggedIn: async (req, res, next) => { // Make it async
       console.log('isLoggedIn starting');
-      console.log('sessionController req.cookies ', req.cookies);
+      console.log(`sessionController's req.cookies `, req.cookies);
       
       const sessionId = req.cookies.ssid;
       
