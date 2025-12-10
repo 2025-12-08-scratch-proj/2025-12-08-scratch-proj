@@ -90,7 +90,7 @@ export default {
       // will get 8 entries (size) from page 1
       const page = 1;
       const size = 8;
-      const genre = "Fantasy"; // user input ->
+      const genre = req.query.genre as string; // user input ->
       const sort = "asc"; // user input -> should be either 'asc' or 'desc'
 
       const baseUrl = `https://anime-db.p.rapidapi.com/anime`;
@@ -118,7 +118,7 @@ export default {
       // Store char data in res.locals obj (res -> Express res to client)
       //   res.locals.getAnime = limitAnime;
 
-      res.locals.animeGenre = genreAnime;
+      res.locals.animeGenre = genreAnime.data;
 
       // Move to next middleware
       return next();
