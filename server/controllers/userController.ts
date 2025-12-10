@@ -24,23 +24,33 @@ const userController: UserController = {
   createUser: async (req, res, next) => {
     const { username, password } = req.body;
 
-  // alternative method:
-  // User.create() -> Mongoose middleware under the hood will automatically run .pre method before saving even with .create()
+    // alternative method:
+    // User.create() -> Mongoose middleware under the hood will automatically run .pre method before saving even with .create()
 
     try {
-      const newUser = new User({
+      const newUser = await User.create({
         username: username,
-        // password: hashPwd
         password: password,
       });
 
-      await newUser.save();
-
-      // store user ID for setSSIDCookie to use
       res.locals.userId = newUser._id;
       res.locals.username = newUser.username;
 
-      console.log("new user created: ", newUser.username);
+      console.log("new user created with _id: ", newUser._id);
+
+      // const newUser = new User({
+      //   username: username,
+      //   // password: hashPwd
+      //   password: password,
+      // });
+
+      // await newUser.save();
+
+      // store user ID for setSSIDCookie to use
+      // res.locals.userId = newUser._id;
+      // res.locals.username = newUser.username;
+
+      // console.log("new user created: ", newUser.username);
 
       return next();
     } catch (err) {
