@@ -73,11 +73,12 @@ app.get('/signup', (_, res) => {
 
 app.post('/signup', userController.createUser, (req, res) => {
   console.log(req.cookies);  
-  res.redirect('/secret');
+  res.redirect('/secret'); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
+  // res.redirect('/'); // or if no time, just redirect to landing page
 });
 
 /**
-* login
+* login - do we need login.html?
 */
 app.post('/login', userController.verifyUser, (req, res) => {
   console.log('POST login req.cookies ', req.cookies);
