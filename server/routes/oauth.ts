@@ -2,8 +2,8 @@ import express from "express";
 import path from "path";
 
 import userController from '../controllers/userController.ts';
-// import cookieController from '../controllers/cookieController.ts';
-// import sessionController from '../controllers/sessionController.ts';
+import cookieController from '../controllers/cookieController.ts';
+import sessionController from '../controllers/sessionController.ts';
 
 const oauthRouter = express.Router();
 // PATH VARIABLES (accessing React frontend)
@@ -16,7 +16,7 @@ oauthRouter.get('/signup', (_, res) => {
   return res.status(200).sendFile(path.join(clientPath, "signup.html"));
 });
 
-oauthRouter.post('/signup', userController.createUser, (req, res) => {
+oauthRouter.post('/signup', userController.createUser, cookieController.setSSIDCookie, sessionController.startSession,  (req, res) => {
 //   console.log(req.cookies);  
   console.log('user on signup page')
   return res.redirect('/secret'); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
@@ -27,19 +27,22 @@ oauthRouter.post('/signup', userController.createUser, (req, res) => {
 * login - do we need login.html? 
 * http://localhost:3000/oauth/login
 */
-oauthRouter.post('/login', userController.verifyUser, (req, res) => {
-//   console.log('POST login req.cookies ', req.cookies);
-console.log('user on login page')
+oauthRouter.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession,  (req, res) => {
+console.log('POST oauthRouter login req.cookies ', req.cookies);
+console.log('POST oauthRouter user on login page')
   return res.redirect('/secret');
 });
 
 
 // authorized routes (without authentication yet)
 // * http://localhost:3000/oauth/secret
-oauthRouter.get('/secret',  (req, res) => {
-    console.log('user at secret page');
+oauthRouter.get('/secret', sessionController.isLoggedIn,  (req, res) => {
+  console.log('GET secret page oauthRouter req.cookies ', req.cookies);
+    console.log('user logged in at at secret page');
   return res.status(200).sendFile(path.join(clientPath, "secret.html"));
 });
+
+
 
 export default oauthRouter;
 

@@ -1,15 +1,38 @@
 import mongoose from 'mongoose';
+// import {Schema, Document } from 'mongoose'; // make sure to import Document type from mongoose (unless already imported from line above)?
 import bcrypt from 'bcryptjs';
+import { AnimeData  } from '../types'
+
+// extend Document type from Mongoose
+export interface IUser extends Document {
+  username: string;
+  password: string;
+  favorites: AnimeData[];
+}
 
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
-const userSchema = new Schema({
-  username: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  favorites: {type: String, required: false}
+
+// create AnimeData schema separately
+const animeDataSchema = new Schema({
+  title: { type: String, required: true },
+  ranking: { type: Number, required: true },
+  genres: [{ type: String }],
+  image: { type: String, required: true },
+  synopsis: { type: String }
 });
 
+// create userSchema
+const userSchema = new Schema<IUser>({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  favorites: {
+    type: [animeDataSchema], // use the separate schema here
+    required: false, // this makes it optional
+    default: [] // set up empty array as default - good practice for arrays
+  }
+});
 
 userSchema.pre('save', async function(next) {
   // Only hash the password if it has been modified (or is new)

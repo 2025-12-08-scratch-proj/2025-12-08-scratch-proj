@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 // import fileController from "../controllers/fileController.ts";
 import swapiController from "../controllers/swapiController.ts";
-// import characterController from "../controllers/characterController.ts";
+import userController from "../controllers/userController.ts";
 
 const apiRouter = express.Router(); // creates a mini Express app for routing
 
@@ -23,7 +23,8 @@ apiRouter.get(
 // http://localhost:3000/api/genre
 apiRouter.get(
   "/genre",
-  swapiController.getByGenre,
+  // swapiController.getByGenre, userController.updateUser,
+  swapiController.getByGenre, 
   (_, res) => {
     return res.status(200).json({ animeGenre: res.locals.animeGenre });
   }
