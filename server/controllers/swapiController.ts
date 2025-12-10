@@ -133,32 +133,5 @@ export default {
 
 
 
-    // ADD MIDDLEWARE TO ADD CHARACTER PHOTOS HERE
-  populateAnimePhotos: (req: Request, res: Response, next: NextFunction) => {
-    try {
-      if (!res.locals.moreCharacters) {
-        throw new Error("invalid input data");
-      }
-      // OPTION 1: iterate over each char and add photo prop
-      // res.locals.moreCharacters = res.locals.moreCharacters.map((charObj) => {
-      //   return {
-      //     ...charObj, // spread existing props
-      //     photo: convertToPhotoUrl(charObj.name), // add photo prop
-      //   };
-      // });
-
-      // OPTION 2: using Object.assign(), iterate over each char and add photo prop
-      res.locals.moreCharacters = res.locals.moreCharacters.map( charObj => {
-        return Object.assign( {}, charObj, {photo: convertToPhotoUrl(charObj.name)  
-        });
-      });
-      return next();
-    } catch (err) {
-      return next({
-        log: `populateCharPhotos error: ${err}`,
-        message: { err: "incorrect input received" },
-      });
-    }
-  },
 
 };
