@@ -55,22 +55,22 @@ oauthRouter.post(
 
 // authorized routes (without authentication yet)
 // * http://localhost:3000/oauth/secret
-oauthRouter.get(
-  "/secret",
-  sessionController.isLoggedIn,
-  swapiController.getAllAnime,
-  (req, res) => {
-    console.log("user at secret page");
-    console.log(
-      "req.cookies, userId, username ",
-      req.cookies,
-      res.locals.userId,
-      res.locals.username
-    ); // TEST ssid COOKIES HERE to make sure matches userId
-    // return res.status(200).sendFile(path.join(clientPath, "secret.html"));
-    return res.redirect("http://localhost:5173/"); // use FULL URL to return to landing page index.html
-  }
-);
+// oauthRouter.get(
+//   "/secret",
+//   sessionController.isLoggedIn,
+//   swapiController.getAllAnime,
+//   (req, res) => {
+//     console.log("user at secret page");
+//     console.log(
+//       "req.cookies, userId, username ",
+//       req.cookies,
+//       res.locals.userId,
+//       res.locals.username
+//     ); // TEST ssid COOKIES HERE to make sure matches userId
+//     // return res.status(200).sendFile(path.join(clientPath, "secret.html"));
+//     return res.redirect("http://localhost:5173/"); // use FULL URL to return to landing page index.html
+//   }
+// );
 
 // http://localhost:3000/oauth/favorites
 oauthRouter.get(
