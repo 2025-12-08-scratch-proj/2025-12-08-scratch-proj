@@ -1,9 +1,7 @@
 import path from "path";
-// import { fileURLToPath } from 'url';
 import express, { Request, Response, NextFunction } from "express";
 import apiRouter from "./routes/api";
 import oauthRouter from "./routes/oauth";
-// import favRouter from "./routes/favs";
 
 import dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
@@ -73,7 +71,7 @@ app.get("/", (_, res) => {
 // catch-all route handler for any requests to an unknown route
 app.use((_, res) => {
   // res.sendStatus(404);
-  return res.status(404).send("404: page not found"); // do we need to put return here?
+  return res.status(404).send("404: page not found"); 
 });
 
 type CustomError = {

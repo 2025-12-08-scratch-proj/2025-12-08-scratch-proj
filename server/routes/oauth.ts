@@ -4,7 +4,6 @@ import path from "path";
 import userController from "../controllers/userController.ts";
 import cookieController from "../controllers/cookieController.ts";
 import sessionController from "../controllers/sessionController.ts";
-import swapiController from "../controllers/swapiController.ts";
 
 const oauthRouter = express.Router();
 // PATH VARIABLES (accessing React frontend)
@@ -28,8 +27,9 @@ oauthRouter.post(
   sessionController.startSession,
   (req, res) => {
     console.log("user on signup page ", res.locals.username, res.locals.userId);
-    console.log("cookies, if exists: ", req.cookies); // // TEST ssid COOKIES HERE
-     return res.redirect("http://localhost:5173/"); 
+    console.log("cookies, if exists: ", req.cookies); // TEST ssid COOKIES HERE
+     return res.redirect("http://localhost:5173/");  // for some reason, doesn't fully load frontend unless we have this URL
+     // first had this as http://localhost:3000/ but was just displaying the HTML header without completely loading the App
   }
 );
 
@@ -53,24 +53,6 @@ oauthRouter.post(
   }
 );
 
-// authorized routes (without authentication yet)
-// * http://localhost:3000/oauth/secret
-// oauthRouter.get(
-//   "/secret",
-//   sessionController.isLoggedIn,
-//   swapiController.getAllAnime,
-//   (req, res) => {
-//     console.log("user at secret page");
-//     console.log(
-//       "req.cookies, userId, username ",
-//       req.cookies,
-//       res.locals.userId,
-//       res.locals.username
-//     ); // TEST ssid COOKIES HERE to make sure matches userId
-//     // return res.status(200).sendFile(path.join(clientPath, "secret.html"));
-//     return res.redirect("http://localhost:5173/"); // use FULL URL to return to landing page index.html
-//   }
-// );
 
 // http://localhost:3000/oauth/favorites
 oauthRouter.get(
@@ -83,13 +65,3 @@ oauthRouter.get(
 
 export default oauthRouter;
 
-
-
-// oauthRouter.get(
-//    "/favs", sessionController.isLoggedIn, userController.getFavorites,
-// (req, res) => {
-//   // return res.status(200).json({ userFavs: res.locals.userFavs });
-//   return res.status(200).sendFile(path.join(clientPath, "favorites.html"));
-
-// }
-// )

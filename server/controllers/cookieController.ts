@@ -19,7 +19,7 @@ const cookieController: CookieController = {
         maxAge: 1000 * 60 * 60 * 24,
         path: '/' // makes cookie available for all routes
       })
-      // DO NOT TEST LIKE THIS --> console.log(`setSSIDCookie's req.cookies `, req.cookies) // req.cookies NOT yet available since cookies are set in response headers, so this console.log will show PREVIOUS ssid for last person who logged in
+      // DO NOT TEST LIKE THIS here --> console.log(`setSSIDCookie's req.cookies `, req.cookies) // req.cookies NOT yet available since cookies are set in response headers, so this console.log will show PREVIOUS ssid for last person who logged in
       return next();
     } catch (err) {
       return next(err);

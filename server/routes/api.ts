@@ -1,20 +1,15 @@
 import express from "express";
-import path from "path";
-// import fileController from "../controllers/fileController.ts";
 import swapiController from "../controllers/swapiController.ts";
 import userController from "../controllers/userController.ts";
-
-import cookieController from "../controllers/cookieController.ts";
 import sessionController from "../controllers/sessionController.ts";
 
 const apiRouter = express.Router(); // creates a mini Express app for routing
 
 // ADD STARTER DATA REQUEST ROUTE HANDLER HERE
-//GET req
-// if req path matches '/api/' 
-// 
+//GET req if req path matches '/api/' 
 
-// ADD GET ROUTE HANDLER HERE - make sure to change endpoint URL
+
+// ADD GET ROUTE HANDLER HERE
 apiRouter.get(
   "/",
   swapiController.getAllAnime,
@@ -43,8 +38,6 @@ apiRouter.post(
     });
   }
 );
-
-
 
 
 // EXPORT THE ROUTER

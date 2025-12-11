@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-// cookie id = session id 
+// cookie id = session id
 const sessionSchema = new Schema({
   cookieId: { type: String, required: true, unique: true },
-  createdAt: { type: Date, expires: 600, default: Date.now } // not sure if the expires really works on MongoDB since seems to expire before then
+  createdAt: { type: Date, expires: 600, default: Date.now },
 });
 
-export default mongoose.model('Session', sessionSchema);
+export default mongoose.model("Session", sessionSchema);

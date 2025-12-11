@@ -91,11 +91,10 @@ const userController: UserController = {
 
       if (!userExist) {
         console.log("User not found with ssid: ", ssid);
-        // since this is middleware that might run on many routes
         // clear invalid cookie
         console.log("clearing invalid cookie ssid");
         res.clearCookie("ssid");
-        return next(); // or return next('User not found');
+        return next();
       }
 
       console.log("User found:", userExist.username, userExist._id);
@@ -154,11 +153,10 @@ const userController: UserController = {
 
       if (!userExist) {
         console.log("User not found with ssid: ", ssid);
-        // since this is middleware that might run on many routes
         // clear invalid cookie
         console.log("clearing invalid cookie ssid");
         res.clearCookie("ssid");
-        return next(); // or return next('User not found');
+        return next();
       }
 
       console.log("User found:", userExist.username, userExist._id);
