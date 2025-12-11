@@ -78,12 +78,10 @@ const userController: UserController = {
     }
   },
 
-  updateUser: async (req: Request, res: Response, next: NextFunction) => {
-    if (!req.cookies) return next();
+  addToFavorites: async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.cookies.ssid) return next();
 
     const ssid = req.cookies.ssid;
-
-    if (!ssid) return next();
 
     try {
       // check if already existing user, IF the userSchema didn't already require unique
@@ -102,13 +100,72 @@ const userController: UserController = {
 
       console.log("User found:", userExist.username, userExist._id);
 
-      // const { favorites } = userExist;
+      const { title, ranking, genres, image, synopsis } = req.body;
 
-      // const { title, ranking, genres, image, synopsis } = res.locals.animeGenre
+      if (!title || !ranking || !synopsis) {
+        return res.status(400).json({ err: "missing anime data" });
+      }
 
-      
+      // checks if anime already in favs
+      // some() array method tests whether at least 1 element in an array passes a condition
+      const isAlreadyFav = userExist.favorites.some(
+        (fav) => fav.title === title && fav.ranking === ranking
+      );
 
+      if (isAlreadyFav) console.log("already in favs", userExist.favorites);
 
+      if (!isAlreadyFav) {
+        console.log("currently adding to favs");
+
+        const newFav = {
+          title,
+          ranking,
+          genres,
+          image: image || "",
+          synopsis,
+        };
+
+        // add to userfavs
+        userExist.favorites.push(newFav);
+
+        await userExist.save();
+
+        res.locals.userFavs = userExist.favorites;
+
+        console.log("fav added ", userExist.username, userExist.favorites);
+      }
+
+      return next();
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  getFavorites: async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.cookies.ssid) return next();
+
+    const ssid = req.cookies.ssid;
+
+    try {
+      // check if already existing user, IF the userSchema didn't already require unique
+      console.log("checking for userId that matches ssid: ", ssid);
+
+      const userExist = await User.findById(ssid);
+
+      if (!userExist) {
+        console.log("User not found with ssid: ", ssid);
+        // since this is middleware that might run on many routes
+        // clear invalid cookie
+        console.log("clearing invalid cookie ssid");
+        res.clearCookie("ssid");
+        return next(); // or return next('User not found');
+      }
+
+      console.log("User found:", userExist.username, userExist._id);
+
+      res.locals.userFavs = userExist.favorites;
+
+      console.log("favorites found ", userExist.favorites);
 
       return next();
     } catch (err) {

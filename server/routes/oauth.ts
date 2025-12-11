@@ -73,53 +73,23 @@ oauthRouter.get(
   }
 );
 
+oauthRouter.get(
+  "/favorites", sessionController.isLoggedIn, userController.getFavorites,
+  (req, res) => {
+    console.log('OauthRouter GET favorites ', res.locals.userFavs)
+    return res.status(200).json({userFavs: res.locals.userFavs});
+  }
+);
+
 export default oauthRouter;
 
-/**
- * signup
- */
-// app.get('/signup', (_, res) => {
-//   return res.status(200).sendFile(path.join(clientPath, "signup.html"));
-// });
 
-// app.post('/signup', userController.createUser , cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-//   console.log(req.cookies);
-//   res.redirect('/secret');
-// });
 
-// /**
-// * login
-// */
-// app.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-//   // what should happen here on successful log in?
-//   console.log('POST login req.cookies ', req.cookies);
-//  // return res.status(200).json(res.locals.verifyUser)
-//   res.redirect('/secret');
-// });
+// oauthRouter.get(
+//    "/favs", sessionController.isLoggedIn, userController.getFavorites,
+// (req, res) => {
+//   // return res.status(200).json({ userFavs: res.locals.userFavs });
+//   return res.status(200).sendFile(path.join(clientPath, "favorites.html"));
 
-/**
- * Authorized routes
- */
-
-// Add this route to test cookies
-// app.get('/check-cookies', (req, res) => {
-//   console.log('Cookies received:', req.cookies);
-//   res.json({
-//     cookies: req.cookies,
-//     headers: req.headers.cookie
-//   });
-// });
-
-// app.get('/secret', sessionController.isLoggedIn, (req, res) => {
-//   return res.status(200).sendFile(path.join(clientPath, "secret.html"));
-// });
-
-// app.get('/secret/users', sessionController.isLoggedIn, userController.getAllUsers, (req, res) => {
-//   res.send( { users: res.locals.users });
-// })
-
-// // cookie for all requests here?
-// app.use('/', cookieController.setCookie, (req, res) => {
-//   console.log(req.cookies);  // should show cookie headers
-//   res.send('set a new cookie!');
-// })
+// }
+// )
