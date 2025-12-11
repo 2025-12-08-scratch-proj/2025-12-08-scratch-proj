@@ -9,6 +9,9 @@ const App = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("")
+  const [searchCount, setSearchCount] = useState(0);
+  const [totalExplored, setTotalExplored] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
   const options = [
     { value: "Action", label: "Action" },
@@ -48,7 +51,6 @@ const App = () => {
       if (!response.ok) throw new Error("Failed to fetch anime");
 
       const data = await response.json();
-
       console.log(data);
 
       if (!data.animeGenre || !Array.isArray(data.animeGenre)) {
@@ -56,11 +58,39 @@ const App = () => {
       }
 
       setResults(data.animeGenre);
+
+      setSearchCount((prev) => prev + 1);
+      setTotalExplored((prev) => prev + data.animeGenre.length);
     } catch (err) {
       console.error(err);
-      setError("Something went wrong while loading anime.")
+      setError("Something went wrong while loading anime.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddFavorite = async (anime) => {
+
+    try {
+      const response = await fetch("/api/genre", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: anime.title,
+          ranking: anime.ranking,
+          genres: anime.genres,
+          image: anime.image,
+          synopsis: anime.synopsis,
+        })
+      })
+      console.log(response);
+
+      if (!response.ok) throw new Error("Failed to add favorite");
+
+      setFavorites((prev) => [...prev, anime.id]);
+    } catch (err) {
+      console.error(err);
+      alert("Could not add favorite. Please try again.");
     }
   }
 
@@ -91,27 +121,71 @@ const App = () => {
         />
       </div>
       
+      <div className="status-bar">
+        <span>
+          {genre ? (
+            <>
+              Genre: <strong>{genre.label}</strong>
+            </>
+          ) : (
+            "No genre selected yet."
+          )}
+        </span>
+
+        <span>
+          {results.length > 0 
+            ? `${results.length} result${results.length > 1 ? "s" : ""} this search`
+            : "No results loaded"}
+        </span>
+
+        {searchCount > 0 && (
+          <span>
+            Session: <strong>{totalExplored}</strong> titles explored in{" "}
+            <strong>{searchCount}</strong>{" "}
+            search{searchCount > 1 ? "es" : ""}
+          </span>
+        )}
+      </div>
+      
+  
+
 
       <div className="results">
-        {loading && <p className="status">Loading anime...</p>}
+        {/*working on loading grid style*/}
+        {loading && (
+          <div className="results-grid">
+            {Array.from({ length: 6}).map((_,indx) => (
+              <article key={indx} className="anime-card skel-card">
+                <div className="skel-image shimmer"/>
+                <div className="skel-line shimmer" />
+                <d className="skel-line skel-line-short shimmer" />
+              </article>
+            ))}
+          </div>
+        )}
 
         {!loading && error && <p className="status error">{error}</p>}
 
         {!loading && !error && !genre && (
           <p className="status">Pick a genre to see recommendations.</p>
         )}
+
         {!loading && !error && results.length > 0 && (
           <div className="results-grid">
             {results.map((anime) => (
               <article key={anime.id} className="anime-card">
-                <div className="anime-card-content">
                   <img src={anime.image} alt={anime.title} className="anime-result" />
                   <div className="anime-card-content">
-                    <h2 className="anime-title">{anime.title}</h2>
+                    <div className="title-row">
+                      <h2 className="anime-title">{anime.title}</h2>
+                      <span 
+                      className="favorite-star"
+                      onClick={() => handleAddFavorite(anime)}
+                      >☆</span>
+                    </div>
                     <span className="anime-rank">#{anime.ranking}</span>
                     <p className="anime-description">{anime.synopsis}</p>
                   </div>
-                </div>
               </article>
             ))}
           </div>

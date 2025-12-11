@@ -26,11 +26,26 @@ apiRouter.get(
 // http://localhost:3000/api/genre
 apiRouter.get(
   "/genre",
-  swapiController.getByGenre, userController.updateUser, 
+  swapiController.getByGenre,
   (req, res) => {
     return res.status(200).json({ animeGenre: res.locals.animeGenre });
   }
 );
+
+// http://localhost:3000/api/genre
+apiRouter.post(
+  "/genre", sessionController.isLoggedIn,
+  userController.addToFavorites, 
+  (req, res) => {
+    return res.status(200).json( {
+      message: 'anime added to user favs',
+      favorites: res.locals.userFavs
+    });
+  }
+);
+
+
+
 
 // EXPORT THE ROUTER
 export default apiRouter;

@@ -7,25 +7,26 @@ const sessionController: SessionController = {
     console.log("isLoggedIn starting");
     console.log(`sessionController's req.cookies `, req.cookies);
 
-    const sessionId = req.cookies.ssid;
+    const ssid = req.cookies.ssid;
 
-    if (!sessionId) {
-      console.log("No session cookie found");
-      return res.redirect("/"); // or to login page
+    if (!ssid) {
+      console.log("No ssid cookie found");
+      return res.redirect("http://localhost:3000/login"); // go to login page
     }
 
     try {
       // verify the session exists in database
-      const session = await Session.findOne({ cookieId: sessionId });
+      const session = await Session.findOne({ cookieId: ssid });
       if (!session) {
         console.log("Session not found in database");
         res.clearCookie("ssid"); // clear invalid cookie
         console.log("clear cookie, then redirect");
-        return res.redirect("/");
+        return res.redirect("http://localhost:3000/login");
       }
 
       console.log("User is logged in");
-      res.locals.userId = sessionId;
+      res.locals.userId = ssid;
+      console.log("userId reassigned to sessionId");
       return next();
     } catch (err) {
       console.error("Error checking session:", err);
