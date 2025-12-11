@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up · Anime Recommender </title>
+  <link rel="stylesheet" href="/stylesheets/styles.css"/>
+</head>
+<body class="anime-signup-body">
+  <div class="anime-signup-page">
+    <div class="anime-signup-card">
+      <!--this is the left side-->
+      <div class="anime-signup-art">
+        <div class="anime-logo-pill">🌵Otaku Rec</div>
+        <h1 class="anime-signup-heading">
+          Welcome to your <span>anime multiverse</span>
+        </h1>
+        <p class="anime-signup-copy">
+          Create an account to save genres you love, track hidden gems, and
+          never forget "that one show with the cool sword guy" again.
+        </p>
+
+        <div class="anime-chip-row">
+          <span>Night-Blooming Cereus 🌙 </span>
+          <span>Slice of Life ⚔️</span>
+          <span>Fantasy ✨</span>
+        </div>
+
+        <p class="anime-signup-small">
+          No emails. No spam. Just anime energy and your saved sessions.
+        </p>
+      </div>
+
+      <!--Right form-->
+      <div class="anime-signup-form">
+        <h2 class="anime-form-title">Create your account</h2>
+        <p class="anime-form-subtitle">
+          Pick a username, set a password, and you're in.
+        </p>
+
+        <form
+          class="anime-form"
+          method="POST"
+          action="/oauth/signup"
+        >
+          <div class="anime-form-field">
+            <label class="anime-form-label" for="username">Username</label>
+            <input
+              class="anime-form-input"
+              id="username"
+              name="username"
+              type="text"
+              required 
+              autocomplete="username"
+              placeholder="anime_lover12"
+            />
+          </div>
+
+          <div class="anime-form-field">
+            <label class="anime-form-label" for="password">Password</label>
+            <input 
+              class="anime-form-input"
+              id="password"
+              name="password"
+              type="password"
+              required
+              autocomplete="new-password"
+              placeholder="•••••••"
+            />
+          </div>
+
+          <button class="anime-form-button" type="submit">
+            Sign up
+          </button>
+        </form>
+
+        <p class="anime-form-footer">
+          Already have an account?
+          <a href="/oauth/login" class="anime-form-link">Log in</a>
+        </p>
+
+        <p class="anime-form-backlink">
+          ← Just want recs?
+          <a href="/">Go back to homepage</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

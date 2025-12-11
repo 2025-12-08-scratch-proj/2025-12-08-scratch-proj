@@ -15,7 +15,7 @@ const apiRouter = express.Router(); // creates a mini Express app for routing
 apiRouter.get(
   "/",
   swapiController.getAllAnime,
-  (_, res) => {
+  (_req, res) => {
     return res.status(200).json({ getAnime: res.locals.getAnime });
   }
 );
@@ -24,7 +24,7 @@ apiRouter.get(
 apiRouter.get(
   "/genre",
   swapiController.getByGenre,
-  (_, res) => {
+  (_req, res) => {
     return res.status(200).json({ animeGenre: res.locals.animeGenre });
   }
 );
