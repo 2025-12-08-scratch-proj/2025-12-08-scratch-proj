@@ -66,8 +66,7 @@ const App = () => {
 
   return (
     <div 
-      className="app-background"
-      >
+      className="app-background">
       <div className="dropdown">
         <h1>Get anime recommendations based on your preferred genre.</h1>
         <Select
@@ -100,14 +99,14 @@ const App = () => {
           <div className="results-grid">
             {results.map((anime) => (
               <article key={anime.id} className="anime-card">
-                <div className="anime-card-header">
+                <div className="anime-card-content">
                   <img src={anime.image} alt={anime.title} className="anime-result" />
-                  <div>
+                  <div className="anime-card-content">
                     <h2 className="anime-title">{anime.title}</h2>
                     <span className="anime-rank">#{anime.ranking}</span>
+                    <p className="anime-description">{anime.synopsis}</p>
                   </div>
                 </div>
-                <p className="anime-description">{anime.synopsis}</p>
               </article>
             ))}
           </div>

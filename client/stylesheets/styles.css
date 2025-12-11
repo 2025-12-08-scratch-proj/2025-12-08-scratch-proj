@@ -3,7 +3,6 @@
 *:before,
 *:after {
   box-sizing: inherit;
-  position: relative;
 }
 
 *:focus {
@@ -45,4 +44,116 @@ h3 {
 .dropdown {
   max-width: 400px;
   margin: 0 auto;
+}
+
+.dropdown h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+  align-items: start;
+}
+
+.anime-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #f0f0f0;
+}
+
+.anime-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.anime-card div {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.anime-card h2 {
+  font-size: 18px;
+  margin: 0;
+  color: #111;
+}
+
+.anime-card span {
+  font-size: 14px;
+  background: #e0f2ff;
+  color: #0077b6;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  align-self: flex-start;
+}
+
+.anime-card .anime-description {
+  font-size: 14px;
+  color: #555;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: max-height 0.3s ease;
+  max-height: 5.5em;
+}
+
+.anime-card:hover .anime-description {
+  -webkit-line-clamp: unset;
+  max-height: 1000px;
+  overflow: visible;
+}
+
+.anime-card-content {
+  padding: 20px;
+}
+
+.anime-card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 20px;
+  color: #333;
+}
+
+.status.error {
+  color: red;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-clamp: 4;
+  text-overflow: ellipsis;
+}
+
+.app-background {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 40px 20px;
 }
