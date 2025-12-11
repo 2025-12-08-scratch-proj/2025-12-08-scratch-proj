@@ -11,6 +11,7 @@ const App = () => {
   const [error, setError] = useState("")
   const [searchCount, setSearchCount] = useState(0);
   const [totalExplored, setTotalExplored] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
   const options = [
     { value: "Action", label: "Action" },
@@ -68,6 +69,31 @@ const App = () => {
     }
   };
 
+  const handleAddFavorite = async (anime) => {
+
+    try {
+      const response = await fetch("/api/genre", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: anime.title,
+          ranking: anime.ranking,
+          genres: anime.genres,
+          image: anime.image,
+          synopsis: anime.synopsis,
+        })
+      })
+      console.log(response);
+
+      if (!response.ok) throw new Error("Failed to add favorite");
+
+      setFavorites((prev) => [...prev, anime.id]);
+    } catch (err) {
+      console.error(err);
+      alert("Could not add favorite. Please try again.");
+    }
+  }
+
   return (
     <div className="app-background">
         <div className="top-right-buttons">
@@ -102,7 +128,7 @@ const App = () => {
               Genre: <strong>{genre.label}</strong>
             </>
           ) : (
-            "No genre selected yet"
+            "No genre selected yet."
           )}
         </span>
 
@@ -152,7 +178,10 @@ const App = () => {
                   <div className="anime-card-content">
                     <div className="title-row">
                       <h2 className="anime-title">{anime.title}</h2>
-                      <span className="favorite-star">☆</span>
+                      <span 
+                      className="favorite-star"
+                      onClick={() => handleAddFavorite(anime)}
+                      >☆</span>
                     </div>
                     <span className="anime-rank">#{anime.ranking}</span>
                     <p className="anime-description">{anime.synopsis}</p>
