@@ -24,7 +24,7 @@ oauthRouter.post(
   (req, res) => {
     console.log("user on signup page");
     console.log("cookies, if exists: ", req.cookies); // // TEST ssid COOKIES HERE
-    return res.redirect("/secret"); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
+    return res.redirect("/"); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
     // res.redirect('/'); // or if no time, just redirect to landing page
   }
 );
@@ -41,7 +41,7 @@ oauthRouter.post(
   (req, res) => {
     // do NOT test for req.cookies here since will still have previous logged in user's cookies, NOT yet coookies for current user
     console.log("POST oauthRouter user on login page");
-    return res.redirect("/secret");
+    return res.redirect("/");
   }
 );
 

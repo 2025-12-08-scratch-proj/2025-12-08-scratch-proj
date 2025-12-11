@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign up · Anime Recommender </title>
-  <link rel="stylesheet" href="/stylesheets/styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in · Anime Recommender</title>
+  <link rel="stylesheet" href="/stylesheets/styles.css" />
 </head>
 <body class="anime-signup-body">
   <div class="anime-signup-page">
     <div class="anime-signup-card">
-      <!--this is the left side-->
+      <!-- Left side -->
       <div class="anime-signup-art">
         <div class="anime-logo-pill">🌵Otaku Rec</div>
         <h1 class="anime-signup-heading">
-          Welcome to your <span>anime multiverse</span>
+          Welcome back to your <span>anime multiverse</span>
         </h1>
         <p class="anime-signup-copy">
-          Create an account to save genres you love, track hidden gems, and
-          never forget "that one show with the cool sword guy" again.
+          Pick up where you left off, revisit saved genres, and keep finding
+          the next world to binge.
         </p>
 
         <div class="anime-chip-row">
-          <span class="anime-chip">Night-Blooming Cereus 🌙 </span>
-          <span class="anime-chip">Slice of Life ⚔️</span>
-          <span class="anime-chip">Fantasy ✨</span>
+          <span class="anime-chip">Shounen ⚡</span>
+          <span class="anime-chip">Found Family 💫</span>
+          <span class="anime-chip">Psychological 🧠</span>
         </div>
 
         <p class="anime-signup-small">
-          No emails. No spam. Just anime energy and your saved sessions.
+          Your favorites live in your account — not in “that one tab you closed”.
         </p>
       </div>
 
-      <!--Right form-->
+      <!-- Right form -->
       <div class="anime-signup-form">
-        <h2 class="anime-form-title">Create your account</h2>
+        <h2 class="anime-form-title">Log in</h2>
         <p class="anime-form-subtitle">
-          Pick a username, set a password, and you're in.
+          Enter your username and password to continue.
         </p>
 
         <form
           class="anime-form"
           method="POST"
-          action="/oauth/signup"
+          action="/oauth/login"
         >
           <div class="anime-form-field">
             <label class="anime-form-label" for="username">Username</label>
@@ -50,7 +50,7 @@
               id="username"
               name="username"
               type="text"
-              required 
+              required
               autocomplete="username"
               placeholder="anime_lover12"
             />
@@ -58,25 +58,25 @@
 
           <div class="anime-form-field">
             <label class="anime-form-label" for="password">Password</label>
-            <input 
+            <input
               class="anime-form-input"
               id="password"
               name="password"
               type="password"
               required
-              autocomplete="new-password"
-              placeholder="•••••••"
+              autocomplete="current-password"
+              placeholder="••••••••"
             />
           </div>
 
           <button class="anime-form-button" type="submit">
-            Sign up
+            Log in
           </button>
         </form>
 
         <p class="anime-form-footer">
-          Already have an account?
-          <a href="/oauth/login" class="anime-form-link">Log in</a>
+          Need an account?
+          <a href="/oauth/signup" class="anime-form-link">Sign up</a>
         </p>
 
         <p class="anime-form-backlink">
