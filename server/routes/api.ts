@@ -32,6 +32,7 @@ apiRouter.get(
   }
 );
 
+// http://localhost:3000/api/genre
 apiRouter.post(
   "/genre", sessionController.isLoggedIn,
   userController.addToFavorites, 

@@ -29,8 +29,7 @@ oauthRouter.post(
   (req, res) => {
     console.log("user on signup page ", res.locals.username, res.locals.userId);
     console.log("cookies, if exists: ", req.cookies); // // TEST ssid COOKIES HERE
-    return res.redirect("/"); // could show user preferences / favs / should just retrieve from DB NOT require another fetch call from external API
-    // res.redirect('/'); // or if no time, just redirect to landing page
+     return res.redirect("http://localhost:5173/"); 
   }
 );
 
@@ -50,7 +49,7 @@ oauthRouter.post(
       res.locals.username,
       res.locals.userId
     );
-    return res.redirect("/");
+    return res.redirect("http://localhost:5173/");
   }
 );
 
@@ -69,10 +68,11 @@ oauthRouter.get(
       res.locals.username
     ); // TEST ssid COOKIES HERE to make sure matches userId
     // return res.status(200).sendFile(path.join(clientPath, "secret.html"));
-    return res.redirect("http://localhost:3000/"); // use FULL URL to return to landing page index.html
+    return res.redirect("http://localhost:5173/"); // use FULL URL to return to landing page index.html
   }
 );
 
+// http://localhost:3000/oauth/favorites
 oauthRouter.get(
   "/favorites", sessionController.isLoggedIn, userController.getFavorites,
   (req, res) => {
