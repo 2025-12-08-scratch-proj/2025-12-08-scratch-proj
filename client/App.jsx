@@ -12,6 +12,9 @@ const App = () => {
   const [searchCount, setSearchCount] = useState(0);
   const [totalExplored, setTotalExplored] = useState(0);
   const [favorites, setFavorites] = useState([]);
+  const [favoritesLoading, setFavoritesLoading] = useState(false);
+  const [favoritesError, setFavoritesError] = useState("");
+  const [view, setView] = useState("home");
 
   const options = [
     { value: "Action", label: "Action" },
@@ -87,112 +90,252 @@ const App = () => {
 
       if (!response.ok) throw new Error("Failed to add favorite");
 
-      setFavorites((prev) => [...prev, anime.id]);
+      const data = await response.json();
+
+      if (data.favorites && Array.isArray(data.favorites)) {
+        setFavorites(data.favorites);
+      }
+
+      alert("Added to favorites!");
     } catch (err) {
       console.error(err);
-      alert("Could not add favorite. Please try again.");
+      alert("Could not add favorite. Please log in and try again.");
     }
-  }
+  };
+  
+
+  const loadFavorites = async () => {
+    setFavoritesError("");
+    setFavoritesLoading(true);
+    try {
+      const res = await fetch("/oauth/favorites", {
+        credentials: "include",
+      });
+
+    
+      if (res.redirected && res.url.includes("/login")) {
+        window.location.href = "/oauth/login";
+        return;
+      }
+
+      const data = await res.json();
+
+      if (!data.userFavs || !Array.isArray(data.userFavs)) {
+        throw new Error("Unexpected favorites response");
+      }
+
+      setFavorites(data.userFavs);
+    } catch (err) {
+      console.error(err);
+      setFavoritesError(
+        "Could not load favorites. Please log in and try again."
+      );
+    } finally {
+      setFavoritesLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (view === "favorites") {
+      loadFavorites();
+    }
+  }, [view]);
+
+  const handleShowFavorites = () => {
+    setView("favorites");
+  };
+
+  const handleShowHome = () => {
+    setView("home");
+  };
+
+
 
   return (
     <div className="app-background">
         <div className="top-right-buttons">
           <a href="/signup.html" className="auth-btn signup-btn">Sign Up</a>
           <a href="/login.html" className="auth-btn login-btn">Login</a>
+          <button
+          type="button"
+          className="auth-btn favorites-btn"
+          onClick={handleShowFavorites}
+        >
+          Favorites
+        </button>
         </div>
 
-
-      <div className="dropdown">
-        <h1>Get anime recommendations based on your preferred genre.</h1>
-        <Select
-          placeholder="Select a genre: "
-          options={options}
-          onChange={handleChange}
-          value={genre}
-          isSearchable
-          styles={{
-            control: (base) => ({
-              ...base,
-            borderRadius: "50px",
-            paddingLeft: "12px",
-            paddingRight: "12px",
-            })
-          }}
-        />
-      </div>
       
-      <div className="status-bar">
-        <span>
-          {genre ? (
-            <>
-              Genre: <strong>{genre.label}</strong>
-            </>
-          ) : (
-            "No genre selected yet."
-          )}
-        </span>
 
-        <span>
-          {results.length > 0 
-            ? `${results.length} result${results.length > 1 ? "s" : ""} this search`
-            : "No results loaded"}
-        </span>
-
-        {searchCount > 0 && (
-          <span>
-            Session: <strong>{totalExplored}</strong> titles explored in{" "}
-            <strong>{searchCount}</strong>{" "}
-            search{searchCount > 1 ? "es" : ""}
-          </span>
-        )}
-      </div>
       
-  
-
-
-      <div className="results">
-        {/*working on loading grid style*/}
-        {loading && (
-          <div className="results-grid">
-            {Array.from({ length: 6}).map((_,indx) => (
-              <article key={indx} className="anime-card skel-card">
-                <div className="skel-image shimmer"/>
-                <div className="skel-line shimmer" />
-                <d className="skel-line skel-line-short shimmer" />
-              </article>
-            ))}
+      {view === "home" && (
+        <>
+          <div className="dropdown">
+            <h1>Get anime recommendations based on your preferred genre.</h1>
+            <Select
+              placeholder="Select a genre: "
+              options={options}
+              onChange={handleChange}
+              value={genre}
+              isSearchable
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  borderRadius: "50px",
+                  paddingLeft: "12px",
+                  paddingRight: "12px",
+                }),
+              }}
+            />
           </div>
-        )}
 
-        {!loading && error && <p className="status error">{error}</p>}
+          <div className="status-bar">
+            <span>
+              {genre ? (
+                <>
+                  Genre: <strong>{genre.label} {"|"}</strong>
+                </>
+              ) : (
+                "No genre selected yet."
+              )}
+            </span>
 
-        {!loading && !error && !genre && (
-          <p className="status">Pick a genre to see recommendations.</p>
-        )}
+            <span>
+              {results.length > 0
+                ? `${results.length} result${
+                    results.length > 1 ? "s" : ""
+                  } for this search |`
+                : "No results loaded"}
+            </span>
 
-        {!loading && !error && results.length > 0 && (
-          <div className="results-grid">
-            {results.map((anime) => (
-              <article key={anime.id} className="anime-card">
-                  <img src={anime.image} alt={anime.title} className="anime-result" />
-                  <div className="anime-card-content">
-                    <div className="title-row">
-                      <h2 className="anime-title">{anime.title}</h2>
-                      <span 
-                      className="favorite-star"
-                      onClick={() => handleAddFavorite(anime)}
-                      >☆</span>
+            {searchCount > 0 && (
+              <span>
+                Session: <strong>{totalExplored}</strong> titles explored in{" "}
+                <strong>{searchCount}</strong>{" "}
+                search{searchCount > 1 ? "es" : ""}
+              </span>
+            )}
+          </div>
+
+          <div className="results">
+            {/* loading grid */}
+            {loading && (
+              <div className="results-grid">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <article key={idx} className="anime-card skel-card">
+                    <div className="skel-image shimmer" />
+                    <div className="skel-line shimmer" />
+                    <div className="skel-line skel-line-short shimmer" />
+                  </article>
+                ))}
+              </div>
+            )}
+
+            {!loading && error && (
+              <p className="status error">{error}</p>
+            )}
+
+            {!loading && !error && !genre && (
+              <p className="status">Pick a genre to see recommendations.</p>
+            )}
+
+            {!loading && !error && results.length > 0 && (
+              <div className="results-grid">
+                {results.map((anime) => (
+                  <article key={anime.id} className="anime-card">
+                    <img
+                      src={anime.image}
+                      alt={anime.title}
+                      className="anime-result"
+                    />
+                    <div className="anime-card-content">
+                      <div className="title-row">
+                        <h2 className="anime-title">{anime.title}</h2>
+                        <span
+                          className="favorite-star"
+                          onClick={() => handleAddFavorite(anime)}
+                        >
+                          ☆
+                        </span>
+                      </div>
+                      <span className="anime-rank">
+                        #{anime.ranking}
+                      </span>
+                      <p className="anime-description">
+                        {anime.synopsis}
+                      </p>
                     </div>
-                    <span className="anime-rank">#{anime.ranking}</span>
-                    <p className="anime-description">{anime.synopsis}</p>
-                  </div>
-              </article>
-            ))}
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
+
+      {view === "favorites" && (
+        <div className="favorites-page">
+          <div className="favorites-header">
+            <button
+              type="button"
+              className="auth-btn"
+              onClick={handleShowHome}
+            >
+              ← Back to recommendations
+            </button>
+            <h1>Your favorite anime</h1>
+            <p>
+              These are the shows you've starred while logged in.
+            </p>
+          </div>
+
+          {favoritesLoading && (
+            <p className="status">Loading favorites...</p>
+          )}
+
+          {favoritesError && (
+            <p className="status error">{favoritesError}</p>
+          )}
+
+          {!favoritesLoading &&
+            !favoritesError &&
+            favorites.length === 0 && (
+              <p className="status">
+                You don't have any favorites yet. Go back and star a
+                few!
+              </p>
+            )}
+
+          {!favoritesLoading &&
+            !favoritesError &&
+            favorites.length > 0 && (
+              <div className="results-grid">
+                {favorites.map((anime, idx) => (
+                  <article key={idx} className="anime-card">
+                    <img
+                      src={anime.image}
+                      alt={anime.title}
+                      className="anime-result"
+                    />
+                    <div className="anime-card-content">
+                      <div className="title-row">
+                        <h2 className="anime-title">{anime.title}</h2>
+                        <span className="anime-rank">
+                          #{anime.ranking}
+                        </span>
+                      </div>
+                      <p className="anime-description">
+                        {anime.synopsis}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
   
