@@ -65,8 +65,13 @@ const App = () => {
   }
 
   return (
-    <div 
-      className="app-background">
+    <div className="app-background">
+        <div className="top-right-buttons">
+          <a href="/signup.html" className="auth-btn signup-btn">Sign Up</a>
+          <a href="/login.html" className="auth-btn login-btn">Login</a>
+        </div>
+
+
       <div className="dropdown">
         <h1>Get anime recommendations based on your preferred genre.</h1>
         <Select
