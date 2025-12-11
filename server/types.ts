@@ -19,6 +19,7 @@ export interface UserController {
   getAllUsers: RequestHandler;
   createUser: RequestHandler;
   verifyUser: RequestHandler;
+    updateUser: RequestHandler;
 }
 
 export interface CookieController {
