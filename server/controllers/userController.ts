@@ -104,7 +104,9 @@ const userController: UserController = {
 
       // const { favorites } = userExist;
 
-      // const { title, ranking, genres, image, synopsis } = 
+      // const { title, ranking, genres, image, synopsis } = res.locals.animeGenre
+
+      
 
 
 
