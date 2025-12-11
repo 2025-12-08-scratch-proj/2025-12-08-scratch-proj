@@ -5,7 +5,10 @@ import { Request, Response, NextFunction } from "express";
 // NOTE: rate limit -> 100 calls per day
 // universal API key to connect to rapidapi.com's databases of databases: 364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124
 
-const API_KEY = process.env.API_KEY
+// const API_KEY = process.env.API_KEY
+
+const API_KEY = '364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124'
+
 // make sure to add to fetch request -> { headers: { "X-RapidApi-Key": API_KEY }}
 
 export default {
@@ -109,9 +112,12 @@ export default {
         { headers: { "X-RapidApi-Key": API_KEY } }
         // Check if API resp success
       );
+
       if (!response.ok) {
         throw new Error(`RapidAPI responded with status: ${response.status}`);
       }
+
+      
 
       // Parse API resp (FROM JSON input -> convert to usable JavaScript)
       const genreAnime = await response.json();

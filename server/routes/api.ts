@@ -4,6 +4,9 @@ import path from "path";
 import swapiController from "../controllers/swapiController.ts";
 import userController from "../controllers/userController.ts";
 
+import cookieController from "../controllers/cookieController.ts";
+import sessionController from "../controllers/sessionController.ts";
+
 const apiRouter = express.Router(); // creates a mini Express app for routing
 
 // ADD STARTER DATA REQUEST ROUTE HANDLER HERE
@@ -11,7 +14,7 @@ const apiRouter = express.Router(); // creates a mini Express app for routing
 // if req path matches '/api/' 
 // 
 
-// ADD GET MORE CHARACTERS ROUTE HANDLER HERE - make sure to change endpoint URL
+// ADD GET ROUTE HANDLER HERE - make sure to change endpoint URL
 apiRouter.get(
   "/",
   swapiController.getAllAnime,
@@ -23,9 +26,8 @@ apiRouter.get(
 // http://localhost:3000/api/genre
 apiRouter.get(
   "/genre",
-  // swapiController.getByGenre, userController.updateUser,
-  swapiController.getByGenre, 
-  (_, res) => {
+  swapiController.getByGenre, userController.updateUser, 
+  (req, res) => {
     return res.status(200).json({ animeGenre: res.locals.animeGenre });
   }
 );
