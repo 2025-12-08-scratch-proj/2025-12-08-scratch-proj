@@ -13,7 +13,7 @@ export interface IUser extends Document {
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
-// create AnimeData schema separately
+// create AnimeData schema separately, though ended up not really using
 const animeDataSchema = new Schema({
   title: { type: String, required: true },
   ranking: { type: Number, required: true },
@@ -48,3 +48,7 @@ userSchema.pre("save", async function (next) {
 });
 
 export default mongoose.model("User", userSchema);
+
+// no need to call mongoose.model() meethod on animeDataSchema
+// animeDataSchema is a subdocument schema, not a standalone collection
+// so it's embedded directly within userSchema via type: [animeDataSchema]

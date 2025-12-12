@@ -23,6 +23,7 @@ const app = express();
 // add teammates as database admin under Database & Network Access (need to expand left-side menu)
 // give each teammate username and password URI
 // put MONGO_URI=<uri connection string> inside .env file
+// MONGO_URI=mongodb+srv://<username>:<password>@cluster0.lfloktr.mongodb.net/?appName=Cluster0
 const mongoURI : any = process.env.MONGO_URI;
 
 // mongoose.connect(mongoURI);
