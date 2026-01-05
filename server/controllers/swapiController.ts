@@ -7,8 +7,6 @@ import { Request, Response, NextFunction } from "express";
 
 // const API_KEY = process.env.API_KEY // for some reason, doesn't work so we just put API_KEY here
 
-const API_KEY = "364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124";
-
 // make sure to add to fetch request -> { headers: { "X-RapidApi-Key": API_KEY }}
 
 export default {
