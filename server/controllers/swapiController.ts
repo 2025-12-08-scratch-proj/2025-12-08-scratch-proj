@@ -3,9 +3,8 @@ import { Request, Response, NextFunction } from "express";
 
 // fetch GET request from https://anime-db.p.rapidapi.com/anime
 // NOTE: rate limit -> 100 calls per day
-// universal API key to connect to rapidapi.com's databases of databases: 364d55f1f0msh935e709f926d171p114655jsnd8aa628e1124
 
-// const API_KEY = process.env.API_KEY // for some reason, doesn't work so we just put API_KEY here
+const API_KEY = process.env.API_KEY // if doesn't work, just add API_KEY here
 
 // make sure to add to fetch request -> { headers: { "X-RapidApi-Key": API_KEY }}
 
